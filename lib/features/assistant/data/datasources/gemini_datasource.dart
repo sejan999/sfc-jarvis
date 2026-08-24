@@ -41,7 +41,7 @@ class GeminiDatasource {
       model: _model,
       apiKey: _apiKey,
       systemInstruction: Content.system(_systemPersona),
-      generationConfig: const GenerationConfig(
+      generationConfig: GenerationConfig(
         temperature: 0.7,
         maxOutputTokens: 512,
       ),

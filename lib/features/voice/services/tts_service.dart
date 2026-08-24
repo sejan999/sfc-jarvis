@@ -23,9 +23,9 @@ class TTSService {
       await _tts.setVolume(1.0);
       await _tts.awaitSpeakCompletion(true);
       await _tts.setStartHandler(() => _speaking = true);
-      await _tts.setCompletionHandler(() => _speaking = false);
-      await _tts.setCancelHandler(() => _speaking = false);
-      await _tts.setErrorHandler((_) => _speaking = false);
+      _tts.setCompletionHandler(() => _speaking = false);
+      _tts.setCancelHandler(() => _speaking = false);
+      _tts.setErrorHandler((_) => _speaking = false);
       _initialized = true;
     } catch (_) {
       _initialized = false;
