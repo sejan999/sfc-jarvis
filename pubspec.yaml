@@ -1,0 +1,43 @@
+name: sfc_jarvis
+description: SFC Jarvis - A futuristic hands-free mobile AI assistant with voice interaction, LLM brain, web search and phone automation.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.5
+
+  # Voice Interaction
+  speech_to_text: ^6.6.2
+  flutter_tts: ^4.0.2
+
+  # AI Brain (Google Gemini)
+  google_generative_ai: ^0.4.6
+
+  # Networking & Config
+  http: ^1.2.1
+  flutter_dotenv: ^5.1.0
+
+  # Phone Automation & Permissions
+  url_launcher: ^6.3.0
+  permission_handler: ^11.3.1
+
+  # UI Utilities
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
