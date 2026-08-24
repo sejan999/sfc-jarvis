@@ -103,14 +103,14 @@ Runtime permission for the microphone is requested automatically on first use.
 
 A ready-to-use pipeline lives in [`codemagic.yaml`](codemagic.yaml):
 
-1. Bootstraps `.env` from Codemagic secret variables
-2. `flutter pub get` → analyze → test
-3. Builds release APK (split per ABI) + App Bundle
-4. Publishes artifacts & email notifications
+1. `flutter pub get` → analyze → test
+2. Builds a single universal release APK (debug-keystore signed by default)
+3. Publishes artifacts & email notifications
 
-Configure these secret groups in the Codemagic UI:
-- `env_vars`: `GEMINI_API_KEY`
-- `keystore_credentials`: optional release signing vars
+No external Codemagic variable groups are required. If you want your Gemini
+key baked into CI builds, commit a `.env` privately or add it as a secret
+variable yourself — otherwise the app will simply surface a friendly
+"API key not configured" message at runtime.
 
 ---
 
