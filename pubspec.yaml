@@ -15,7 +15,7 @@ dependencies:
   equatable: ^2.0.5
 
   # Voice Interaction
-  speech_to_text: ^6.6.2
+  speech_to_text: ^7.0.0
   flutter_tts: ^4.0.2
 
   # AI Brain (Google Gemini)
