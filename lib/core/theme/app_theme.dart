@@ -55,7 +55,7 @@ class AppTheme {
         thumbColor: WidgetStateProperty.all(JarvisColors.neonCyan),
         trackColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.selected)
-              ? JarvisColors.neonBlue.withOpacity(0.5)
+              ? JarvisColors.neonBlue.withValues(alpha: 0.5)
               : JarvisColors.card,
         ),
       ),

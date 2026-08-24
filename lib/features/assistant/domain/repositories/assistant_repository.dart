@@ -1,5 +1,3 @@
-import '../entities/assistant_entities.dart';
-
 /// Abstract contract for the conversational AI brain.
 abstract class AssistantRepository {
   /// Sends a user message with multi-turn context and returns Jarvis's reply.

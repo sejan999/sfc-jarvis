@@ -25,13 +25,13 @@ class DeviceActionService {
       if (payload == 'toggle_flashlight') return await _toggleFlashlight();
 
       if (payload.startsWith('call:')) {
-        return _launchCall(payload.substring(5).trim());
+        return await _launchCall(payload.substring(5).trim());
       }
       if (payload.startsWith('sms:')) {
-        return _launchSms(payload.substring(4).trim());
+        return await _launchSms(payload.substring(4).trim());
       }
       if (payload.startsWith('open:')) {
-        return _openApp(payload.substring(5).trim());
+        return await _openApp(payload.substring(5).trim());
       }
       if (payload.startsWith('reminder:')) {
         return const DeviceActionResult(

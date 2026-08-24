@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
             center: Alignment.topCenter,
             radius: 1.4,
             colors: [
-              JarvisColors.neonBlue.withOpacity(0.08),
+              JarvisColors.neonBlue.withValues(alpha: 0.08),
               JarvisColors.background,
             ],
           ),
@@ -72,7 +72,7 @@ class _HandsFreeToggle extends StatelessWidget {
               color: JarvisColors.card,
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
-                color: JarvisColors.neonCyan.withOpacity(0.3),
+                color: JarvisColors.neonCyan.withValues(alpha: 0.3),
               ),
             ),
             child: Row(
@@ -139,10 +139,10 @@ class _TranscriptPanel extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
                   decoration: BoxDecoration(
-                    color: JarvisColors.card.withOpacity(0.7),
+                    color: JarvisColors.card.withValues(alpha: 0.7),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: JarvisColors.neonCyan.withOpacity(0.5),
+                      color: JarvisColors.neonCyan.withValues(alpha: 0.5),
                     ),
                   ),
                   child: Row(

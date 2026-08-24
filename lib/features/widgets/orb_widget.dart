@@ -102,8 +102,8 @@ class _OrbWidgetState extends State<OrbWidget>
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: _phaseColor.withOpacity(
-                            (1 - ringT) * 0.35 * _baseIntensity,
+                          color: _phaseColor.withValues(
+                            alpha: (1 - ringT) * 0.35 * _baseIntensity,
                           ),
                           width: 2,
                         ),
@@ -130,7 +130,8 @@ class _OrbWidgetState extends State<OrbWidget>
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: _phaseColor.withOpacity(0.45 * _baseIntensity),
+                        color:
+                            _phaseColor.withValues(alpha: 0.45 * _baseIntensity),
                         blurRadius: 60,
                         spreadRadius: 12,
                       ),
@@ -146,15 +147,15 @@ class _OrbWidgetState extends State<OrbWidget>
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        Colors.white.withOpacity(0.85),
-                        _phaseColor.withOpacity(0.75),
-                        JarvisColors.neonBlue.withOpacity(0.55),
-                        JarvisColors.background.withOpacity(0.95),
+                        Colors.white.withValues(alpha: 0.85),
+                        _phaseColor.withValues(alpha: 0.75),
+                        JarvisColors.neonBlue.withValues(alpha: 0.55),
+                        JarvisColors.background.withValues(alpha: 0.95),
                       ],
                       stops: const [0.0, 0.35, 0.7, 1.0],
                     ),
                     border: Border.all(
-                      color: _phaseColor.withOpacity(0.8),
+                      color: _phaseColor.withValues(alpha: 0.8),
                       width: 2,
                     ),
                   ),
@@ -202,7 +203,7 @@ class _ArcPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3
       ..strokeCap = StrokeCap.round
-      ..color = color.withOpacity(0.7);
+      ..color = color.withValues(alpha: 0.7);
 
     for (var i = 0; i < 4; i++) {
       final start = progress * 2 * math.pi + i * math.pi / 2;

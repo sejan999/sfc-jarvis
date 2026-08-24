@@ -36,7 +36,6 @@ class SpeechService {
     return _initialized;
   }
 
-  SpeechResultCallback? _onResult;
   SpeechErrorCallback? _onError;
   SpeechStatusCallback? _onStatus;
 
@@ -49,7 +48,6 @@ class SpeechService {
     required SpeechStatusCallback onStatus,
     bool partialResults = true,
   }) async {
-    _onResult = onResult;
     _onError = onError;
     _onStatus = onStatus;
 

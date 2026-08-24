@@ -31,12 +31,12 @@ class MessageBubble extends StatelessWidget {
           ),
           border: Border.all(
             color: (_isUser ? JarvisColors.neonBlue : JarvisColors.neonCyan)
-                .withOpacity(0.35),
+                .withValues(alpha: 0.35),
           ),
           boxShadow: [
             BoxShadow(
               color: (_isUser ? JarvisColors.neonBlue : JarvisColors.neonCyan)
-                  .withOpacity(0.08),
+                  .withValues(alpha: 0.08),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),

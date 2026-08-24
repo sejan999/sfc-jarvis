@@ -1,4 +1,3 @@
-import '../../domain/entities/assistant_entities.dart';
 import '../../domain/repositories/assistant_repository.dart';
 import '../datasources/gemini_datasource.dart';
 
