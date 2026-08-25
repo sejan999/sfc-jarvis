@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SFC Jarvis orb: cyan ring, dark shell, blue core, white highlight -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer glow ring -->
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M54,54 m-30,0 a30,30 0 1,1 60,0 a30,30 0 1,1 -60,0" />
+
+    <!-- Dark inner shell -->
+    <path
+        android:fillColor="#0A1424"
+        android:pathData="M54,54 m-24,0 a24,24 0 1,1 48,0 a24,24 0 1,1 -48,0" />
+
+    <!-- Neon blue core -->
+    <path
+        android:fillColor="#2979FF"
+        android:pathData="M54,54 m-14,0 a14,14 0 1,1 28,0 a14,14 0 1,1 -28,0" />
+
+    <!-- White specular highlight -->
+    <path
+        android:fillColor="#E6FAFF"
+        android:fillAlpha="0.85"
+        android:pathData="M46,44 m-6,0 a6,6 0 1,1 12,0 a6,6 0 1,1 -12,0" />
+</vector>
