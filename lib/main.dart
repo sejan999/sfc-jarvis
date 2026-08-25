@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/di/injector.dart';
 import 'core/theme/app_theme.dart';
@@ -23,6 +24,16 @@ Future<void> main() async {
   }
 
   Injector.initialize();
+
+  // Restore a user-entered API key (if any) before showing the UI.
+  // This is a fast local read; it never blocks on network or permissions.
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final savedKey = prefs.getString(Injector.apiKeyPrefKey);
+    if (savedKey != null && savedKey.trim().isNotEmpty) {
+      Injector.geminiDatasource.updateApiKey(savedKey);
+    }
+  } catch (_) {/* app still opens even if prefs are unavailable */}
 
   runApp(const SfcJarvisApp());
 }

@@ -52,5 +52,5 @@ Rules:
   static const String listeningHint = 'Listening... speak your command';
   static const String processingHint = 'Processing...';
   static const String speakingHint = 'Speaking...';
-  static const String idleHint = 'Tap the orb or toggle hands-free mode';
+  static const String idleHint = 'Tap Orb to Speak';
 }

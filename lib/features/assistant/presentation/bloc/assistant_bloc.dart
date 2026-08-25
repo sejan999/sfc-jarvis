@@ -319,11 +319,13 @@ class AssistantBloc extends Bloc<AssistantEvent, AssistantState> {
   }
 
   String _friendlyError(Object e) {
-    final msg = e.toString();
-    if (msg.contains('API_KEY') || msg.contains('api key')) {
-      return 'my Gemini API key is not configured.';
+    final msg = e.toString().toLowerCase();
+    if (msg.contains('api_key') ||
+        msg.contains('api key') ||
+        msg.contains('not configured')) {
+      return 'my Gemini API key is not configured. Tap the gear icon to set it.';
     }
-    if (msg.contains('SocketException') || msg.contains('network')) {
+    if (msg.contains('socketexception') || msg.contains('network')) {
       return 'I cannot reach the network right now.';
     }
     return 'an unexpected fault occurred.';

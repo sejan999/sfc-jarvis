@@ -29,6 +29,9 @@ dependencies:
   url_launcher: ^6.3.0
   permission_handler: ^11.3.1
 
+  # Local persistence (API key entry)
+  shared_preferences: ^2.2.3
+
   # UI Utilities
   cupertino_icons: ^1.0.8
 

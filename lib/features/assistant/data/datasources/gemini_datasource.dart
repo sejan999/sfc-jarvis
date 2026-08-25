@@ -16,11 +16,22 @@ class GeminiDatasource {
   GeminiDatasource({required String apiKey, required String model})
       : _apiKey = apiKey,
         _model = model {
-    if (apiKey.isEmpty || apiKey == 'your_gemini_api_key_here') {
-      throw GeminiException(
-        'GEMINI_API_KEY is missing. Copy .env.example to .env and add your key.',
-      );
-    }
+    // NOTE: intentionally does NOT throw when the key is missing —
+    // the app must still start so the user can enter a key in-app.
+    // Callers check [isConfigured] before making network calls.
+    _chat = _createChatSession();
+  }
+
+  static const String placeholderKeys = 'your_gemini_api_key_here';
+
+  /// Whether a usable API key has been provided.
+  bool get isConfigured =>
+      _apiKey.trim().isNotEmpty && _apiKey.trim() != placeholderKeys;
+
+  /// Hot-swaps the API key at runtime (from the in-app settings dialog)
+  /// and resets the conversation session.
+  void updateApiKey(String apiKey) {
+    _apiKey = apiKey.trim();
     _chat = _createChatSession();
   }
 
@@ -32,9 +43,17 @@ class GeminiDatasource {
       'language model; you are SFC Jarvis. If you lack real-time data, say so and '
       'suggest the user say "Jarvis, search for <topic>".';
 
-  final String _apiKey;
+  String _apiKey;
   final String _model;
   late ChatSession _chat;
+
+  void _ensureConfigured() {
+    if (!isConfigured) {
+      throw GeminiException(
+        'Gemini API key is not configured. Tap the gear icon to set your key.',
+      );
+    }
+  }
 
   ChatSession _createChatSession() {
     final generativeModel = GenerativeModel(
@@ -52,6 +71,7 @@ class GeminiDatasource {
   /// Sends [prompt] to Gemini with full conversational context.
   /// Returns Jarvis's textual reply.
   Future<String> sendMessage(String prompt) async {
+    _ensureConfigured();
     try {
       final response = await _chat.sendMessage(Content.text(prompt));
       final text = response.text;
@@ -68,6 +88,7 @@ class GeminiDatasource {
 
   /// One-shot synthesis call (used by web search summarization).
   Future<String> synthesize(String prompt) async {
+    _ensureConfigured();
     try {
       final model = GenerativeModel(
         model: _model,

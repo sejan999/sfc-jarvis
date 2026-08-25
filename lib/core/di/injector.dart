@@ -1,4 +1,5 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/assistant/data/datasources/gemini_datasource.dart';
 import '../../features/assistant/data/repositories/assistant_repository_impl.dart';
@@ -15,19 +16,41 @@ import '../../features/voice/services/tts_service.dart';
 class Injector {
   Injector._();
 
+  static const String apiKeyPrefKey = 'gemini_api_key';
+
+  static late final GeminiDatasource geminiDatasource;
   static late final AssistantRepository assistantRepository;
   static late final SpeechService speechService;
   static late final TTSService ttsService;
   static late final WebSearchService webSearchService;
   static late final DeviceActionService deviceActionService;
 
-  /// Initializes all services. Call once from main() after dotenv load.
+  /// Whether a usable Gemini API key is currently loaded.
+  static bool get isConfigured => geminiDatasource.isConfigured;
+
+  /// Persists [key] locally and hot-swaps it into the Gemini datasource.
+  /// An empty [key] clears the stored credential.
+  static Future<void> applyApiKey(String key) async {
+    final trimmed = key.trim();
+    geminiDatasource.updateApiKey(trimmed);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (trimmed.isEmpty) {
+        await prefs.remove(apiKeyPrefKey);
+      } else {
+        await prefs.setString(apiKeyPrefKey, trimmed);
+      }
+    } catch (_) {/* persistence failure must never crash the UI */}
+  }
+
+  /// Initializes all services without blocking or throwing — a missing
+  /// API key is tolerated so the UI can prompt the user in-app instead.
   static void initialize() {
     final apiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
     final model = dotenv.env['GEMINI_MODEL'] ?? 'gemini-2.0-flash';
 
-    final gemini = GeminiDatasource(apiKey: apiKey, model: model);
-    assistantRepository = AssistantRepositoryImpl(gemini);
+    geminiDatasource = GeminiDatasource(apiKey: apiKey, model: model);
+    assistantRepository = AssistantRepositoryImpl(geminiDatasource);
     speechService = SpeechService();
     ttsService = TTSService();
     webSearchService = WebSearchService(repository: assistantRepository);
