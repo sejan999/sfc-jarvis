@@ -370,7 +370,10 @@ Future<void> _showApiKeyDialog(
       actions: [
         TextButton(
           onPressed: () => Navigator.of(dialogContext).pop(),
-          child: const Text('Cancel', color: JarvisColors.textSecondary),
+          child: const Text(
+            'Cancel',
+            style: TextStyle(color: JarvisColors.textSecondary),
+          ),
         ),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
