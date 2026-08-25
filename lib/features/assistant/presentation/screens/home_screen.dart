@@ -388,6 +388,9 @@ Future<void> _showApiKeyDialog(
                 edited ? controller.text.trim() : '';
             await Injector.applyApiKey(key);
             if (dialogContext.mounted) {
+              // Refresh app state: datasource already hot-swapped inside
+              // applyApiKey; now clear stale config errors in the bloc.
+              context.read<AssistantBloc>().add(const AssistantConfigRefreshed());
               Navigator.of(dialogContext).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/di/injector.dart';
 import '../../../commands/command_parser.dart';
 import '../../../commands/device_action_service.dart';
 import '../../../search/web_search_service.dart';
@@ -69,6 +70,12 @@ class AssistantResetConversation extends AssistantEvent {
   const AssistantResetConversation();
 }
 
+/// Fired after the Gemini API key changes in settings so the UI
+/// can drop stale error state immediately.
+class AssistantConfigRefreshed extends AssistantEvent {
+  const AssistantConfigRefreshed();
+}
+
 // ============================== STATES ==============================
 
 enum AssistantPhase { idle, listening, processing, speaking, error }
@@ -129,6 +136,7 @@ class AssistantBloc extends Bloc<AssistantEvent, AssistantState> {
     on<AssistantProcessCommand>(_onProcessCommand);
     on<AssistantSpeechCompleted>(_onSpeechCompleted);
     on<AssistantResetConversation>(_onResetConversation);
+    on<AssistantConfigRefreshed>(_onConfigRefreshed);
   }
 
   final SpeechService _speech;
@@ -270,6 +278,18 @@ class AssistantBloc extends Bloc<AssistantEvent, AssistantState> {
   ) async {
     _repository.resetConversation();
     emit(_copyWith(messages: [], phase: AssistantPhase.idle));
+  }
+
+  /// Fired right after a new Gemini API key is saved — clears any
+  /// stale configuration error from the UI without wiping transcript.
+  void _onConfigRefreshed(
+    AssistantConfigRefreshed event,
+    Emitter<AssistantState> emit,
+  ) {
+    emit(_copyWith(
+      phase: Injector.isConfigured ? AssistantPhase.idle : state.phase,
+      errorMessage: null,
+    ));
   }
 
   // ============================= HELPERS =============================

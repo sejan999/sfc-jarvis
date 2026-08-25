@@ -16,7 +16,7 @@ import '../../features/voice/services/tts_service.dart';
 class Injector {
   Injector._();
 
-  static const String apiKeyPrefKey = 'gemini_api_key';
+  static const String apiKeyPrefKey = GeminiDatasource.prefKeyName;
 
   static late final GeminiDatasource geminiDatasource;
   static late final AssistantRepository assistantRepository;
@@ -47,7 +47,8 @@ class Injector {
   /// API key is tolerated so the UI can prompt the user in-app instead.
   static void initialize() {
     final apiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
-    final model = dotenv.env['GEMINI_MODEL'] ?? 'gemini-2.0-flash';
+    final model =
+        dotenv.env['GEMINI_MODEL'] ?? GeminiDatasource.fallbackModel;
 
     geminiDatasource = GeminiDatasource(apiKey: apiKey, model: model);
     assistantRepository = AssistantRepositoryImpl(geminiDatasource);
